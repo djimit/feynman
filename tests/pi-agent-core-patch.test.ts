@@ -186,8 +186,17 @@ test("explicit stream watchdog aborts the provider, settles result, and is retry
 		streamFn as never,
 	);
 	const events: unknown[] = [];
-	for await (const event of stream) events.push(event);
-	const messages = await stream.result();
+	// The mock has no socket to keep Node 22 alive for the unref'ed watchdog.
+	const messages = await Promise.race([
+		(async () => {
+			for await (const event of stream) events.push(event);
+			return stream.result();
+		})(),
+		new Promise<never>((_resolve, reject) => {
+			const deadline = setTimeout(() => reject(new Error("watchdog did not settle")), 250);
+			t.after(() => clearTimeout(deadline));
+		}),
+	]);
 	const final = messages.at(-1);
 	assert.equal(final?.role, "assistant");
 	assert.equal(final?.role === "assistant" ? final.stopReason : undefined, "error");

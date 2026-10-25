@@ -101,7 +101,7 @@ async function createNativeRuntimeFixture({ launchable = false } = {}) {
 			platform: process.platform,
 			arch: process.arch,
 			libc,
-			pruneVersion: 8,
+			pruneVersion: 9,
 			runtimeTreeHash: computeRuntimeTreeHash(sourceWorkspaceDir),
 		}, null, 2)}\n`,
 	);

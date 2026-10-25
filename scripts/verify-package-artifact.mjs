@@ -55,8 +55,8 @@ import { assertResearchRuntimeIntakeArchive } from "./lib/research-runtime-intak
 const packageRoot = resolve(process.argv[2] ?? resolve(import.meta.dirname, ".."));
 const prunedNative = process.argv.includes("--pruned-native");
 const packageRequire = createRequire(resolve(packageRoot, "package.json"));
-const FEYNMAN_BRACE_EXPANSION_VERSION = "5.0.11";
-const FEYNMAN_IP_ADDRESS_VERSION = "10.7.0";
+const FEYNMAN_BRACE_EXPANSION_VERSION = "5.0.12";
+const FEYNMAN_IP_ADDRESS_VERSION = "10.7.4";
 const FEYNMAN_PI_DOCPARSER_VERSION = "4.0.0";
 const PI_INTERACTIVE_UPDATE_NOTICE_MARKER = "// Feynman: package update notices use the full update command.";
 const PI_INTERACTIVE_UPDATE_NOTICE_ACTION = 'const action = theme.fg("accent", `${APP_NAME} update`);';

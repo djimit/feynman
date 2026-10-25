@@ -82,7 +82,7 @@ test("prepare runtime workspace pins audited transitive runtime overrides", asyn
 	assert.match(runtimeWorkspaceSource, /"@opentelemetry\/sdk-node": "0\.222\.0"/);
 	assert.match(runtimeWorkspaceSource, /"@opentelemetry\/resources": "2\.11\.0"/);
 	assert.match(runtimeWorkspaceSource, /"@llamaindex\/liteparse": "2\.14\.3"/);
-	assert.match(runtimeWorkspaceSource, /"ip-address": "10\.7\.0"/);
+	assert.match(runtimeWorkspaceSource, /"ip-address": "10\.7\.4"/);
 	assert.match(runtimeWorkspaceSource, /undici: "8\.12\.2"/);
 	assert.match(runtimeWorkspaceSource, /"undici",\n\];/);
 	assert.match(runtimeWorkspaceSource, /overrides: RUNTIME_PACKAGE_OVERRIDES/);
@@ -161,8 +161,8 @@ test("release manifests pin current document and website security repairs", () =
 	const nanoidEntries = Object.entries(lock.packages ?? {}).filter(([path]) => path.endsWith("/node_modules/nanoid") || path === "node_modules/nanoid");
 	assert.ok(nanoidEntries.length > 0, "the resolved PostCSS nanoid dependency must remain covered");
 	for (const [path, entry] of nanoidEntries) assert.equal(entry.version, "3.3.18", path);
-	assert.equal(manifest.overrides?.["ip-address"], "10.7.0");
-	assert.equal(lock.packages?.["node_modules/ip-address"]?.version, "10.7.0");
+	assert.equal(manifest.overrides?.["ip-address"], "10.7.4");
+	assert.equal(lock.packages?.["node_modules/ip-address"]?.version, "10.7.4");
 	for (const packageName of [
 		"@llamaindex/liteparse-darwin-arm64",
 		"@llamaindex/liteparse-darwin-x64",
@@ -182,7 +182,7 @@ test("release manifests pin current document and website security repairs", () =
 	for (const [packageName, version] of [
 		["js-yaml", "4.3.2"],
 		["nanoid", "3.3.18"],
-		["fast-uri", "3.1.7"],
+		["fast-uri", "3.1.9"],
 	]) {
 		assert.equal(websiteManifest.overrides?.[packageName!], version);
 		const entries = Object.entries(websiteLock.packages ?? {}).filter(([path]) =>

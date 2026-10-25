@@ -122,7 +122,7 @@
     "@opentelemetry/semantic-conventions": "^1.43.0",
     "@rdkit/rdkit": "^2025.3.4-1.0.0",
     "3dmol": "^2.5.5",
-    "brace-expansion": "5.0.11",
+    "brace-expansion": "5.0.12",
     "d3": "^7.9.0",
     "fast-xml-parser": "5.11.1",
     "igv": "^3.8.5",
@@ -143,17 +143,17 @@
   },
   "overrides": {
     "basic-ftp": "6.2.1",
-    "brace-expansion": "5.0.11",
-    "hono": "4.13.7",
+    "brace-expansion": "5.0.12",
+    "hono": "4.13.11",
     "qs": "6.16.1",
     "ws": "8.21.3",
     "@modelcontextprotocol/sdk": {
       ".": "1.32.0",
       "@hono/node-server": "2.1.1",
-      "hono": "4.13.7"
+      "hono": "4.13.11"
     },
     "express-rate-limit": "8.7.0",
-    "ip-address": "10.7.0",
+    "ip-address": "10.7.4",
     "express": {
       "router": {
         "path-to-regexp": "8.4.2"
@@ -166,7 +166,7 @@
         }
       }
     },
-    "fast-uri": "3.1.7",
+    "fast-uri": "3.1.9",
     "esbuild": "0.28.2",
     "fast-xml-builder": "1.3.1",
     "nanoid": "3.3.18",

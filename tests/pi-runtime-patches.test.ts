@@ -958,7 +958,7 @@ test("patchPiRuntimeNodeModules repairs current Pi Undici in global and agent ro
 	writeFileSync(join(safeUndiciRoot, "index.js"), "export const proxyFixed = true;\n");
 	writeFileSync(
 		join(safeBraceRoot, "package.json"),
-		JSON.stringify({ name: "brace-expansion", version: "5.0.11" }),
+		JSON.stringify({ name: "brace-expansion", version: "5.0.12" }),
 	);
 	writeFileSync(join(safeBraceRoot, "index.js"), "export const securityFixed = true;\n");
 

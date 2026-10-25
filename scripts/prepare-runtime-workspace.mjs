@@ -114,6 +114,7 @@ const workspaceArchiveDigestPath = resolve(feynmanDir, "runtime-workspace.sha256
 const PRUNE_VERSION = 9;
 const PI_RUNTIME_FALLBACK_VERSION = "0.85.1";
 const RUNTIME_PACKAGE_OVERRIDES = {
+	"hono": "4.13.11",
 	"esbuild": "0.28.2",
 	"@earendil-works/pi-server": "0.85.1",
 	"@mozilla/readability": "0.6.0",
@@ -146,9 +147,9 @@ const RUNTIME_PACKAGE_OVERRIDES = {
 	"@opentelemetry/sdk-trace-base": "2.11.0",
 	"@opentelemetry/sdk-trace-node": "2.11.0",
 	"@llamaindex/liteparse": "2.14.3",
-	"brace-expansion": "5.0.11",
-	"ip-address": "10.7.0",
-	"fast-uri": "3.1.7",
+	"brace-expansion": "5.0.12",
+	"ip-address": "10.7.4",
+	"fast-uri": "3.1.9",
 	qs: "6.16.1",
 	"body-parser": "2.4.0",
 	"zod": "4.6.6",

@@ -83,7 +83,7 @@ test("prepare runtime workspace pins audited transitive runtime overrides", asyn
 	assert.match(runtimeWorkspaceSource, /"@opentelemetry\/resources": "2\.11\.0"/);
 	assert.match(runtimeWorkspaceSource, /"@llamaindex\/liteparse": "2\.14\.3"/);
 	assert.match(runtimeWorkspaceSource, /"ip-address": "10\.7\.0"/);
-	assert.match(runtimeWorkspaceSource, /undici: "8\.10\.2"/);
+	assert.match(runtimeWorkspaceSource, /undici: "8\.12\.2"/);
 	assert.match(runtimeWorkspaceSource, /"undici",\n\];/);
 	assert.match(runtimeWorkspaceSource, /overrides: RUNTIME_PACKAGE_OVERRIDES/);
 	assert.match(installedRuntimeSource, /buildSourceRuntimeArchive/);
@@ -130,7 +130,7 @@ test("published manifest pins the Undici override for npm 10 consumers", async (
 		overrides?: Record<string, unknown>;
 	};
 
-	assert.equal(manifest.dependencies?.undici, "8.10.2");
+	assert.equal(manifest.dependencies?.undici, "8.12.2");
 	assert.equal(manifest.overrides?.undici, manifest.dependencies?.undici);
 	assert.doesNotMatch(String(manifest.overrides?.undici), /^\$/);
 });

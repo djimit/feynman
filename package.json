@@ -122,7 +122,7 @@
     "@opentelemetry/semantic-conventions": "^1.43.0",
     "@rdkit/rdkit": "^2025.3.4-1.0.0",
     "3dmol": "^2.5.5",
-    "brace-expansion": "5.0.9",
+    "brace-expansion": "5.0.11",
     "d3": "^7.9.0",
     "fast-xml-parser": "5.11.1",
     "igv": "^3.8.5",
@@ -135,7 +135,7 @@
     "semver": "^7.8.5",
     "tidytree": "^0.7.0",
     "typebox": "1.3.27",
-    "undici": "8.10.2",
+    "undici": "8.12.2",
     "@advaitpaliwal/alpha-hub": "0.1.4",
     "@earendil-works/pi-client": "0.85.1",
     "@earendil-works/pi-server": "0.85.1",
@@ -143,11 +143,12 @@
   },
   "overrides": {
     "basic-ftp": "6.2.1",
-    "brace-expansion": "5.0.9",
+    "brace-expansion": "5.0.11",
     "hono": "4.13.7",
-    "qs": "6.16.0",
+    "qs": "6.16.1",
     "ws": "8.21.3",
     "@modelcontextprotocol/sdk": {
+      ".": "1.32.0",
       "@hono/node-server": "2.1.1",
       "hono": "4.13.7"
     },
@@ -170,7 +171,11 @@
     "fast-xml-builder": "1.3.1",
     "nanoid": "3.3.18",
     "protobufjs": "7.6.6",
-    "undici": "8.10.2"
+    "undici": "8.12.2",
+    "body-parser": "2.4.0",
+    "zod": "4.6.6",
+    "@grpc/grpc-js": "1.14.5",
+    "proxy-addr": "2.0.8"
   },
   "devDependencies": {
     "@types/node": "^26.4.1",
@@ -187,7 +192,7 @@
     "react-dom": "^19.2.8",
     "tsx": "^4.23.13",
     "typescript": "^7.0.2",
-    "vite": "^8.2.2",
+    "vite": "^8.2.4",
     "yaml": "2.9.0"
   },
   "repository": {

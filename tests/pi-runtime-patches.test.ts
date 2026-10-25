@@ -953,12 +953,12 @@ test("patchPiRuntimeNodeModules repairs current Pi Undici in global and agent ro
 	}
 	writeFileSync(
 		join(safeUndiciRoot, "package.json"),
-		JSON.stringify({ name: "undici", version: "8.10.2" }),
+		JSON.stringify({ name: "undici", version: "8.12.2" }),
 	);
 	writeFileSync(join(safeUndiciRoot, "index.js"), "export const proxyFixed = true;\n");
 	writeFileSync(
 		join(safeBraceRoot, "package.json"),
-		JSON.stringify({ name: "brace-expansion", version: "5.0.9" }),
+		JSON.stringify({ name: "brace-expansion", version: "5.0.11" }),
 	);
 	writeFileSync(join(safeBraceRoot, "index.js"), "export const securityFixed = true;\n");
 
@@ -1030,11 +1030,11 @@ test("patchPiRuntimeNodeModules repairs current Pi Undici in global and agent ro
 	assert.equal(patchPiRuntimeNodeModules(appRoot, agentDir), true);
 	assert.equal(
 		JSON.parse(readFileSync(join(globalPi.nestedUndiciRoot, "package.json"), "utf8")).version,
-		"8.10.2",
+		"8.12.2",
 	);
 	assert.equal(
 		JSON.parse(readFileSync(join(agentPi.nestedUndiciRoot, "package.json"), "utf8")).version,
-		"8.10.2",
+		"8.12.2",
 	);
 	assert.equal(
 		JSON.parse(readFileSync(join(staleAgentPi.nestedUndiciRoot, "package.json"), "utf8")).version,
@@ -1076,13 +1076,13 @@ test("patchPiRuntimeNodeModules accepts newer brace-expansion in Pi's agent-mana
 		lockfileVersion: 3,
 		packages: {
 			"node_modules/brace-expansion": {
-				version: "5.0.10",
+				version: "5.0.12",
 			},
 		},
 	}, null, 2)}\n`;
 	const manifestSource = `${JSON.stringify({
 		name: "brace-expansion",
-		version: "5.0.10",
+		version: "5.0.12",
 	}, null, 2)}\n`;
 	try {
 		mkdirSync(bundledPiRoot, { recursive: true });

@@ -5060,3 +5060,11 @@ Use this file to track chronology, not release notes. Keep entries short, factua
 - Verified: the previously failing exact-CI global installation returns0.3.49 and help successfully after the helper repair; root/root-Pi/runtime/runtime-Pi compiler API, CLI and Chord checks pass. Parent focused26/26, typecheck and architecture pass; independent adversarial review cleared the final canonical-manifest/buffer implementation for CI.
 - Access: existing Daytona environment/profile credential and direct API inventory return401; no alternative credential exists in the scoped config locations. No key, profile or sandbox was changed. This blocks only Daytona, not the available GitHub Linux/macOS/Windows test machines. The release remains unpublished until successor global-consumer and native CI pass.
 - Next: qualify the complete successor package and cold/warm global runtime behavior, then require all exact-head CI lanes before merging/publishing0.3.49. DNS and legacy npm2FA remain separate access gates.
+
+
+### 2026-10-25 — dependency-security-floors: bounded high/critical repairs
+
+- Raised compatible dependency floors for brace-expansion, MCP SDK, Vite, sharp, Undici, body-parser, Zod 4, gRPC and proxy-addr across the root, website and committed runtime lock. Existing Pi repairs now also upgrade prior Feynman brace/Undici copies; exact artifact checks and fixtures follow the same versions.
+- Verified: isolated clean installs; root build/typecheck/architecture; website lint/typecheck/build; 73 focused security/runtime/proxy/compiler tests and the full 1,206-test suite. The package artifact verifier and actual stale-Pi upgrade smoke both pass. Nested brace and chained brace patterns no longer exhaust the parser stack, while ordinary research-file expansion and proxied HTTP requests retain their behavior. Root and runtime audits now contain zero high/critical findings.
+- Blocked: website shadcn still requires Zod 3, whose advisory has no compatible fixed release. The http-cache-semantics advisory remains disputed upstream with no identified fix; no vulnerability-remediation claim is made for its newer version. The withdrawn braces advisory is not a patched finding. Existing moderate findings are outside this repair.
+- Next: review the focused PR and its exact-head CI; publication and deployment remain separate.

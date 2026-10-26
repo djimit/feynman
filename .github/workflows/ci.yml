@@ -1,0 +1,39 @@
+name: Source CI
+# E2E dispatch tests published packages; fold this into E2E when source dispatch is supported.
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+      - run: npm ci
+      - run: npm test
+      - run: npm run typecheck
+      - run: npm run build
+      - run: npm run architecture:check
+      - name: Verify runtime artifact
+        run: |
+          node scripts/prepare-runtime-workspace.mjs
+          node scripts/verify-package-artifact.mjs
+      - name: Audit dependencies
+        run: |
+          npm audit
+          npm audit --omit=dev --prefix .feynman/npm
+      - run: npm ci --prefix website
+      - run: npm test --prefix website
+      - run: npm run lint --prefix website
+      - run: npm run typecheck --prefix website
+      - run: npm run build --prefix website
+      - run: npm audit --prefix website
+      - run: git diff --exit-code

@@ -6,15 +6,15 @@ import { gte as semverGte, valid as validSemver } from "semver";
 const require = createRequire(import.meta.url);
 
 const SAFE_BRACE_EXPANSION = {
-	version: "5.0.9",
-	resolved: "https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.9.tgz",
-	integrity: "sha512-ScQ4IuvIEF1TMlP7Zt+vjJ//9zlPb2SDcxWxM3bk8s6t6GGdJ7KO1dCcTidOPJKePW30LE/2cT7wCyPho9/Wxg==",
+	version: "5.0.12",
+	resolved: "https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.12.tgz",
+	integrity: "sha512-YovQ3rzhaLMIrDjNDMkNS01tea93qhEhG5xy8f6+R0l+dw3Ki+5sCoIoI942iuLZTHWogWktgwVDhU09iNEimQ==",
 	license: "MIT",
 	dependencies: { "balanced-match": "^4.0.2" },
 	engines: { node: "20 || >=22" },
 };
 
-const PATCHABLE_BRACE_EXPANSION_VERSIONS = ["5.0.6", "5.0.7", "5.0.8"];
+const PATCHABLE_BRACE_EXPANSION_VERSIONS = ["5.0.6", "5.0.7", "5.0.8", "5.0.9", "5.0.10", "5.0.11"];
 
 function isSafeBraceExpansionVersion(version) {
 	const parsedVersion = validSemver(version);
@@ -76,8 +76,8 @@ export function patchPiPackageLockSource(source) {
 
 /**
  * Older Pi releases shrinkwrap an affected brace-expansion release. Replace
- * only reviewed 5.0.6-5.0.8 trees with verified 5.0.9 for stale user runtimes.
- * Versions at or above 5.0.9 are outside the advisory range and remain intact.
+ * only reviewed 5.0.6-5.0.11 trees with verified 5.0.12 for stale user runtimes.
+ * Versions at or above 5.0.12 are outside the advisory range and remain intact.
  */
 export function patchPiBraceExpansionTree(nodeModulesPath, fallbackSafePackagePath) {
 	const piRoots = ["@earendil-works", "@mariozechner"]

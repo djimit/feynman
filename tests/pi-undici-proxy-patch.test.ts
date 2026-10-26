@@ -69,14 +69,16 @@ test("Pi Undici patch updates the direct dependency and shrinkwrap", () => {
 	);
 });
 
-test("reviewed Undici 8.10.2 pin upgrades prior Feynman 8.10.0 metadata without accepting unknown releases", () => {
-	assert.equal(FEYNMAN_UNDICI_VERSION, "8.10.2");
-	const manifest = JSON.parse(patchPiCodingAgentUndiciPackageJsonSource(piPackageJson("8.10.0")));
-	assert.equal(manifest.dependencies.undici, "8.10.2");
-	const shrinkwrap = patchPiCodingAgentUndiciShrinkwrapSource(piShrinkwrap("8.10.0"));
-	assertPiCodingAgentUndiciShrinkwrapSource(shrinkwrap, "8.10.2 fixture");
-	assert.equal(JSON.parse(shrinkwrap).packages["node_modules/undici"].integrity,
-		"sha512-/y4/bH9YNU5hi9NIrpOuvGXFcxrj3CMrV+/AYpowAYTpHn8gX/XPFjNy766FPoYY0miQhdW977JFWKGNhBdwyQ==");
+test("reviewed Undici 8.12.2 pin upgrades prior Feynman metadata without accepting unknown releases", () => {
+	assert.equal(FEYNMAN_UNDICI_VERSION, "8.12.2");
+	for (const version of ["8.10.0", "8.10.2"]) {
+		const manifest = JSON.parse(patchPiCodingAgentUndiciPackageJsonSource(piPackageJson(version)));
+		assert.equal(manifest.dependencies.undici, "8.12.2");
+		const shrinkwrap = patchPiCodingAgentUndiciShrinkwrapSource(piShrinkwrap(version));
+		assertPiCodingAgentUndiciShrinkwrapSource(shrinkwrap, "8.12.2 fixture");
+		assert.equal(JSON.parse(shrinkwrap).packages["node_modules/undici"].integrity,
+			"sha512-XtuDWVdqTLr3NAxm2ly9/hU6kUsJOgGh1RASzMBbsw6aWCOaQzHdW+QQDfdERjfJ2V5vL5pRPa4RetO9UfivDg==");
+	}
 	assert.throws(() => patchPiCodingAgentUndiciPackageJsonSource(piPackageJson("99.0.0")), /Unsupported/);
 });
 

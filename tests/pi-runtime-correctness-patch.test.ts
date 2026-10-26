@@ -614,11 +614,11 @@ test("package artifact verification rejects a mixed Pi runtime train", () => {
 					"@earendil-works/pi-ai": PI_RUNTIME_CORRECTNESS_REQUIRED_VERSION,
 					"@earendil-works/pi-coding-agent": PI_RUNTIME_CORRECTNESS_REQUIRED_VERSION,
 					"@earendil-works/pi-tui": PI_RUNTIME_CORRECTNESS_REQUIRED_VERSION,
-					"brace-expansion": "5.0.9",
+					"brace-expansion": "5.0.12",
 				},
 				optionalDependencies: appManifest.optionalDependencies,
 				overrides: {
-					"brace-expansion": "5.0.9",
+					"brace-expansion": "5.0.12",
 					"ip-address": ipAddressVersion,
 				},
 			}),

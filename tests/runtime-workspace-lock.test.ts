@@ -91,9 +91,9 @@ test("vendored runtime uses a committed exact dependency lock", () => {
 		{
 			piTelemetry: "0.85.1",
 			nodeTypes: "26.4.1",
-			fastUri: "3.1.7",
-			qs: "6.16.0",
-			hono: "4.13.7",
+			fastUri: "3.1.9",
+			qs: "6.16.1",
+			hono: "4.13.11",
 		},
 	);
 	assert.deepEqual(
@@ -122,7 +122,7 @@ test("vendored runtime uses a committed exact dependency lock", () => {
 	);
 	assert.equal(
 		runtimeLock.packages["node_modules/undici"]?.version,
-		"8.10.2",
+		"8.12.2",
 	);
 	for (const [packagePath, entry] of Object.entries(
 		runtimeLock.packages,
@@ -132,12 +132,12 @@ test("vendored runtime uses a committed exact dependency lock", () => {
 				"/pi-coding-agent/node_modules/brace-expansion",
 			)
 		) {
-			assert.equal(entry.version, "5.0.9");
+			assert.equal(entry.version, "5.0.12");
 		}
 		if (
 			packagePath.endsWith("/pi-coding-agent/node_modules/undici")
 		) {
-			assert.equal(entry.version, "8.10.2");
+			assert.equal(entry.version, "8.12.2");
 		}
 	}
 });

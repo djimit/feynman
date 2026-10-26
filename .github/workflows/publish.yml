@@ -241,6 +241,7 @@ jobs:
           (
             cd website
             npm ci
+            npm test
             npm run lint
             npm run typecheck
             npm run build

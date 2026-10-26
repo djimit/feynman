@@ -3,6 +3,7 @@ import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
+import { expand } from "brace-expansion";
 
 import {
 	patchPiBraceExpansionTree,
@@ -11,7 +12,7 @@ import {
 } from "../scripts/lib/pi-shrinkwrap-security-patch.mjs";
 
 test("Pi shrinkwrap security patch upgrades only vulnerable brace-expansion entries", () => {
-	for (const version of ["5.0.6", "5.0.7", "5.0.8"]) {
+	for (const version of ["5.0.6", "5.0.7", "5.0.8", "5.0.9", "5.0.10", "5.0.11"]) {
 		const source = JSON.stringify({
 			packages: {
 				"node_modules/brace-expansion": {
@@ -22,9 +23,9 @@ test("Pi shrinkwrap security patch upgrades only vulnerable brace-expansion entr
 		});
 		const patched = JSON.parse(patchPiCodingAgentShrinkwrapSource(source));
 		assert.deepEqual(patched.packages["node_modules/brace-expansion"], {
-			version: "5.0.9",
-			resolved: "https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.9.tgz",
-			integrity: "sha512-ScQ4IuvIEF1TMlP7Zt+vjJ//9zlPb2SDcxWxM3bk8s6t6GGdJ7KO1dCcTidOPJKePW30LE/2cT7wCyPho9/Wxg==",
+			version: "5.0.12",
+			resolved: "https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.12.tgz",
+			integrity: "sha512-YovQ3rzhaLMIrDjNDMkNS01tea93qhEhG5xy8f6+R0l+dw3Ki+5sCoIoI942iuLZTHWogWktgwVDhU09iNEimQ==",
 			license: "MIT",
 			dependencies: { "balanced-match": "^4.0.2" },
 			engines: { node: "20 || >=22" },
@@ -33,12 +34,12 @@ test("Pi shrinkwrap security patch upgrades only vulnerable brace-expansion entr
 	const alreadySafe = `${JSON.stringify({
 		packages: {
 			"node_modules/brace-expansion": {
-				version: "5.0.9",
+				version: "5.0.12",
 			},
 		},
 	}, null, 2)}\n`;
 	assert.equal(patchPiCodingAgentShrinkwrapSource(alreadySafe), alreadySafe);
-	for (const version of ["5.0.10", "6.0.0"]) {
+	for (const version of ["5.0.13", "6.0.0"]) {
 		const futureSafe = `${JSON.stringify({
 			packages: {
 				"node_modules/brace-expansion": {
@@ -68,13 +69,13 @@ test("Pi shrinkwrap security patch upgrades the owning package lock", () => {
 	const patched = JSON.parse(patchPiPackageLockSource(source));
 	assert.equal(
 		patched.packages["node_modules/@earendil-works/pi-coding-agent/node_modules/brace-expansion"].version,
-		"5.0.9",
+		"5.0.12",
 	);
 	assert.equal(patchPiPackageLockSource(patchPiPackageLockSource(source)), patchPiPackageLockSource(source));
 	const futureSafe = `${JSON.stringify({
 		packages: {
 			"node_modules/@earendil-works/pi-coding-agent/node_modules/brace-expansion": {
-				version: "5.0.10",
+				version: "5.0.13",
 			},
 		},
 	}, null, 2)}\n`;
@@ -89,27 +90,27 @@ test("Pi shrinkwrap security patch replaces the nested package tree and is idemp
 	const nestedPackage = join(piRoot, "node_modules", "brace-expansion");
 	mkdirSync(safePackage, { recursive: true });
 	mkdirSync(nestedPackage, { recursive: true });
-	writeFileSync(join(safePackage, "package.json"), JSON.stringify({ name: "brace-expansion", version: "5.0.9" }));
+	writeFileSync(join(safePackage, "package.json"), JSON.stringify({ name: "brace-expansion", version: "5.0.12" }));
 	writeFileSync(join(safePackage, "index.js"), "export const safe = true;\n");
-	writeFileSync(join(nestedPackage, "package.json"), JSON.stringify({ name: "brace-expansion", version: "5.0.8" }));
+	writeFileSync(join(nestedPackage, "package.json"), JSON.stringify({ name: "brace-expansion", version: "5.0.11" }));
 	writeFileSync(join(piRoot, "npm-shrinkwrap.json"), JSON.stringify({
-		packages: { "node_modules/brace-expansion": { version: "5.0.8" } },
+		packages: { "node_modules/brace-expansion": { version: "5.0.11" } },
 	}));
 	writeFileSync(join(root, "package-lock.json"), JSON.stringify({
 		packages: {
 			"node_modules/@earendil-works/pi-coding-agent/node_modules/brace-expansion": {
-				version: "5.0.8",
+				version: "5.0.11",
 			},
 		},
 	}));
 
 	assert.equal(patchPiBraceExpansionTree(nodeModules), true);
-	assert.equal(JSON.parse(readFileSync(join(nestedPackage, "package.json"), "utf8")).version, "5.0.9");
-	assert.equal(JSON.parse(readFileSync(join(piRoot, "npm-shrinkwrap.json"), "utf8")).packages["node_modules/brace-expansion"].version, "5.0.9");
+	assert.equal(JSON.parse(readFileSync(join(nestedPackage, "package.json"), "utf8")).version, "5.0.12");
+	assert.equal(JSON.parse(readFileSync(join(piRoot, "npm-shrinkwrap.json"), "utf8")).packages["node_modules/brace-expansion"].version, "5.0.12");
 	assert.equal(
 		JSON.parse(readFileSync(join(root, "package-lock.json"), "utf8"))
 			.packages["node_modules/@earendil-works/pi-coding-agent/node_modules/brace-expansion"].version,
-		"5.0.9",
+		"5.0.12",
 	);
 	assert.equal(patchPiBraceExpansionTree(nodeModules), false);
 });
@@ -120,9 +121,9 @@ test("Pi shrinkwrap security patch accepts a safe nested tree when npm hoists th
 	const piRoot = join(nodeModules, "@earendil-works", "pi-coding-agent");
 	const nestedPackage = join(piRoot, "node_modules", "brace-expansion");
 	mkdirSync(nestedPackage, { recursive: true });
-	writeFileSync(join(nestedPackage, "package.json"), JSON.stringify({ name: "brace-expansion", version: "5.0.9" }));
+	writeFileSync(join(nestedPackage, "package.json"), JSON.stringify({ name: "brace-expansion", version: "5.0.12" }));
 	writeFileSync(join(piRoot, "npm-shrinkwrap.json"), JSON.stringify({
-		packages: { "node_modules/brace-expansion": { version: "5.0.9" } },
+		packages: { "node_modules/brace-expansion": { version: "5.0.12" } },
 	}));
 
 	assert.equal(patchPiBraceExpansionTree(nodeModules), false);
@@ -134,25 +135,25 @@ test("Pi shrinkwrap security patch leaves newer agent-managed trees intact", () 
 	const piRoot = join(nodeModules, "@earendil-works", "pi-coding-agent");
 	const nestedPackage = join(piRoot, "node_modules", "brace-expansion");
 	mkdirSync(nestedPackage, { recursive: true });
-	writeFileSync(join(nestedPackage, "package.json"), JSON.stringify({ name: "brace-expansion", version: "5.0.10" }));
+	writeFileSync(join(nestedPackage, "package.json"), JSON.stringify({ name: "brace-expansion", version: "5.0.13" }));
 	writeFileSync(join(nestedPackage, "index.js"), "export const future = true;\n");
 	writeFileSync(join(piRoot, "npm-shrinkwrap.json"), JSON.stringify({
-		packages: { "node_modules/brace-expansion": { version: "5.0.10" } },
+		packages: { "node_modules/brace-expansion": { version: "5.0.13" } },
 	}));
 	writeFileSync(join(root, "package-lock.json"), JSON.stringify({
 		packages: {
 			"node_modules/@earendil-works/pi-coding-agent/node_modules/brace-expansion": {
-				version: "5.0.10",
+				version: "5.0.13",
 			},
 		},
 	}));
 
 	assert.equal(patchPiBraceExpansionTree(nodeModules), false);
-	assert.equal(JSON.parse(readFileSync(join(nestedPackage, "package.json"), "utf8")).version, "5.0.10");
+	assert.equal(JSON.parse(readFileSync(join(nestedPackage, "package.json"), "utf8")).version, "5.0.13");
 	assert.equal(
 		JSON.parse(readFileSync(join(piRoot, "npm-shrinkwrap.json"), "utf8"))
 			.packages["node_modules/brace-expansion"].version,
-		"5.0.10",
+		"5.0.13",
 	);
 });
 
@@ -169,11 +170,11 @@ test("embedded Pi dependency tree uses patched brace-expansion", () => {
 		"brace-expansion",
 		"package.json",
 	);
-	assert.equal(JSON.parse(readFileSync(nestedPackage, "utf8")).version, "5.0.9");
+	assert.equal(JSON.parse(readFileSync(nestedPackage, "utf8")).version, "5.0.12");
 	const shrinkwrap = JSON.parse(readFileSync(join(piRoot, "npm-shrinkwrap.json"), "utf8"));
 	assert.equal(
 		shrinkwrap.packages["node_modules/brace-expansion"].version,
-		"5.0.9",
+		"5.0.12",
 	);
 });
 
@@ -190,4 +191,10 @@ test("package artifact verification resolves a hoisted root brace-expansion depe
 		verifierSource,
 		/resolve\(packageRoot, "node_modules", "brace-expansion", "package\.json"\)/,
 	);
+});
+
+test("patched brace expansion bounds nested and chained attacker patterns", () => {
+	assert.deepEqual(expand("paper-{a,{b,c}}.md"), ["paper-a.md", "paper-b.md", "paper-c.md"]);
+	assert.doesNotThrow(() => expand("{".repeat(3000) + "a,b" + "}".repeat(3000)));
+	assert.doesNotThrow(() => expand("{a,b}".repeat(3000), { max: 8, maxLength: 40_000 }));
 });
